@@ -1,0 +1,9 @@
+FROM rstudio/plumber
+
+RUN R -e "install.packages(c('googledrive', 'openxlsx', 'readxl', 'dplyr', 'stringr', 'lubridate'))"
+
+COPY . /app
+WORKDIR /app
+
+EXPOSE 8000
+CMD ["R", "-e", "pr <- plumber::pr('api.R'); pr$run(host = '0.0.0.0', port = 8000)"]
